@@ -163,6 +163,14 @@ The `AuthenticationFilter` is what detects whether a user needs to be authentica
     <param-name>serverName</param-name>
     <param-value>http://www.acme-client.com</param-value>
   </init-param>
+  <init-param>
+    <param-name>locale</param-name>
+    <param-value>true</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cookieName</param-name>
+    <param-value>lang</param-value>
+  </init-param>
 </filter>
 <filter-mapping>
     <filter-name>CAS Authentication Filter</filter-name>
