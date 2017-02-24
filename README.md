@@ -192,6 +192,8 @@ The `AuthenticationFilter` is what detects whether a user needs to be authentica
 | `ignoreUrlPatternType` | Defines the type of the pattern specified. Defaults to `REGEX`. Other types are `CONTAINS`, `EXACT`. | No
 | `gatewayStorageClass` | The storage class used to record gateway requests | No
 | `authenticationRedirectStrategyClass` | The class name of the component to decide how to handle authn redirects to CAS | No
+| `locale ` | 设置是否开启语言类型跟随，如`locale=true` | No
+| `cookieName ` | 设置cookie中获取语言的名字默认为lang，如`cookieName=lang` | No
 
 <a name="orgjasigcasclientauthenticationsaml11authenticationfilter"></a>
 #### org.jasig.cas.client.authentication.Saml11AuthenticationFilter
