@@ -182,9 +182,9 @@ public final class CommonUtils {
      * @return the fully constructed redirect url.
      */
     public static String constructRedirectUrl(final String casServerLoginUrl, final String serviceParameterName,
-            final String serviceUrl, final boolean renew, final boolean gateway) {
+            final String serviceUrl, final boolean renew, final boolean gateway,final boolean locale,final String localeStr) {
         return casServerLoginUrl + (casServerLoginUrl.contains("?") ? "&" : "?") + serviceParameterName + "="
-                + urlEncode(serviceUrl) + (renew ? "&renew=true" : "") + (gateway ? "&gateway=true" : "");
+                + urlEncode(serviceUrl) + (renew ? "&renew=true" : "") + (gateway ? "&gateway=true" : "") + (locale ? "&locale=" + localeStr : "");
     }
 
     /**

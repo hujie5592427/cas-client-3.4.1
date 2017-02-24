@@ -54,7 +54,9 @@ public interface ConfigurationKeys {
     ConfigurationKey<String> CAS_SERVER_URL_PREFIX = new ConfigurationKey<String>("casServerUrlPrefix", null);
     ConfigurationKey<String> ENCODING = new ConfigurationKey<String>("encoding", null);
     ConfigurationKey<Long> TOLERANCE = new ConfigurationKey<Long>("tolerance", 1000L);
-
+    
+    ConfigurationKey<Boolean> LOCALE = new ConfigurationKey<Boolean>("locale", Boolean.FALSE);
+    ConfigurationKey<String> COOKIENAME = new ConfigurationKey<String>("cookieName", "lang");
     /**
      * @deprecated As of 3.4. This constant is not used by the client and will
      * be removed in future versions.

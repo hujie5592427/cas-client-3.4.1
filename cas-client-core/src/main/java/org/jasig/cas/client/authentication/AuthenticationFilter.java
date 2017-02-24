@@ -31,6 +31,7 @@ import org.jasig.cas.client.Protocol;
 import org.jasig.cas.client.configuration.ConfigurationKeys;
 import org.jasig.cas.client.util.AbstractCasFilter;
 import org.jasig.cas.client.util.CommonUtils;
+import org.jasig.cas.client.util.LocaleUtils;
 import org.jasig.cas.client.util.ReflectUtils;
 import org.jasig.cas.client.validation.Assertion;
 
@@ -67,6 +68,12 @@ public class AuthenticationFilter extends AbstractCasFilter {
      */
     private boolean gateway = false;
 
+    /**
+     * Whether to send the locale request or not.
+     */
+    private boolean locale = false;
+    
+    private String cookieName= "lang";
     private GatewayResolver gatewayStorage = new DefaultGatewayResolverImpl();
 
     private AuthenticationRedirectStrategy authenticationRedirectStrategy = new DefaultAuthenticationRedirectStrategy();
@@ -96,6 +103,9 @@ public class AuthenticationFilter extends AbstractCasFilter {
             setCasServerLoginUrl(getString(ConfigurationKeys.CAS_SERVER_LOGIN_URL));
             setRenew(getBoolean(ConfigurationKeys.RENEW));
             setGateway(getBoolean(ConfigurationKeys.GATEWAY));
+            
+            setLocale(getBoolean(ConfigurationKeys.LOCALE));
+            setCookieName(getString(ConfigurationKeys.COOKIENAME));
                        
             final String ignorePattern = getString(ConfigurationKeys.IGNORE_PATTERN);
             final String ignoreUrlPatternType = getString(ConfigurationKeys.IGNORE_URL_PATTERN_TYPE);
@@ -176,9 +186,16 @@ public class AuthenticationFilter extends AbstractCasFilter {
         }
 
         logger.debug("Constructed service url: {}", modifiedServiceUrl);
+        
+        final String localeStr;
+        if(this.locale) {
+        	localeStr = LocaleUtils.getLocale(request, this.cookieName);
+        }else{
+        	localeStr = null;
+        }
 
         final String urlToRedirectTo = CommonUtils.constructRedirectUrl(this.casServerLoginUrl,
-                getProtocol().getServiceParameterName(), modifiedServiceUrl, this.renew, this.gateway);
+                getProtocol().getServiceParameterName(), modifiedServiceUrl, this.renew, this.gateway, this.locale, localeStr);
 
         logger.debug("redirecting to \"{}\"", urlToRedirectTo);
         this.authenticationRedirectStrategy.redirect(request, response, urlToRedirectTo);
@@ -212,4 +229,16 @@ public class AuthenticationFilter extends AbstractCasFilter {
         final String requestUri = urlBuffer.toString();
         return this.ignoreUrlPatternMatcherStrategyClass.matches(requestUri);
     }
+
+
+	public void setLocale(boolean locale) {
+		this.locale = locale;
+	}
+
+
+	public void setCookieName(String cookieName) {
+		this.cookieName = cookieName;
+	}
+    
+    
 }
